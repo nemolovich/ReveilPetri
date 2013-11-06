@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/systeme.xml">
+<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/ReveilPetri/petri/systeme.xml">
   <place id="1" label="Reveillé" initialMarking="1" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="291.0" y="111.0"/> 
@@ -64,6 +64,14 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
+  <place id="9" label="P 9" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="713.0000000000003" y="39.00000000000006"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
   <transition id="1" label="armer"  eft="840" lft="1380" eft_param="840" lft_param="1380"  obs="1"> 
      <graphics color="0"> 
         <position x="319.00000000000006" y="227.00000000000003"/> 
@@ -71,7 +79,7 @@
      </graphics> 
   </transition> 
 
-  <transition id="2" label="sonnerie"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
+  <transition id="2" label="sonnerie"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="138.0" y="436.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
@@ -99,35 +107,35 @@
      </graphics> 
   </transition> 
 
-  <transition id="6" label="désarmer"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
+  <transition id="6" label="désarmer"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="621.0" y="275.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="7" label="armer"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
+  <transition id="7" label="armer"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="778.0" y="331.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="8" label="désarmer"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
+  <transition id="8" label="désarmer"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="501.0" y="287.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="9" label="sonner"  eft="0" lft="inf" eft_param="480" lft_param="480"  obs="1"> 
+  <transition id="9" label="sonner"  eft="480" lft="480" eft_param="480" lft_param="480"  obs="1"> 
      <graphics color="0"> 
         <position x="613.0" y="442.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="10" label="sonner"  eft="0" lft="inf" eft_param="5" lft_param="5"  obs="1"> 
+  <transition id="10" label="sonner"  eft="5" lft="5" eft_param="5" lft_param="5"  obs="1"> 
      <graphics color="0"> 
         <position x="451.0" y="468.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
@@ -135,6 +143,13 @@
   </transition> 
 
   <arc place="1" transition="1" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="9" transition="1" type="PlaceTransition" weight="1"> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
@@ -199,6 +214,13 @@
   </arc> 
  
 
+  <arc place="9" transition="4" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
   <arc place="1" transition="4" type="TransitionPlace" weight="1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
@@ -244,6 +266,12 @@
      </graphics> 
   </arc> 
 
+  <arc place="9" transition="6" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
   <arc place="4" transition="7" type="PlaceTransition" weight="1"> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
@@ -264,6 +292,12 @@
      </graphics> 
   </arc> 
 
+  <arc place="9" transition="7" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
   <arc place="6" transition="8" type="PlaceTransition" weight="1"> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
@@ -279,6 +313,12 @@
  
 
   <arc place="4" transition="8" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="9" transition="8" type="TransitionPlace" weight="1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
