@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/reveil.xml">
+  <place id="1" label="Armé" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="378.00000000000006" y="241.00000000000003"/> 
+         <deltaLabel deltax="10.0" deltay="10.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="2" label="Desarmé" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="432.00000000000006" y="85.00000000000001"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="3" label="Sonne" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="284.00000000000006" y="184.0"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" label="armer"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="377.00000000000006" y="186.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="2" label="désarmer"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="459.00000000000006" y="194.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="3" label="sonner"  eft="0" lft="inf" eft_param="480" lft_param="480"  obs="1"> 
+     <graphics color="0"> 
+        <position x="318.00000000000006" y="228.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="4" label="sonner"  eft="0" lft="inf" eft_param="5" lft_param="5"  obs="1"> 
+     <graphics color="0"> 
+        <position x="121.00000000000006" y="159.00000000000009"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="5" label="désarmer"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="304.00000000000006" y="82.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <arc place="2" transition="1" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="1" transition="1" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="1" transition="2" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="2" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="1" transition="3" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="3" transition="3" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="3" transition="4" type="PlaceTransition" weight="1"> 
+    <nail xnail="199.00000000000003" ynail="207.00000000000003"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="3" transition="4" type="TransitionPlace" weight="1"> 
+     <nail xnail="238.00000000000003" ynail="127.00000000000001"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="3" transition="5" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="5" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="gray"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
