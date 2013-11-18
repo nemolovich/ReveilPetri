@@ -28,6 +28,13 @@ import javax.swing.SwingConstants;
 
 import alarmClock.AlarmClockInterface;
 
+/**
+ * 
+ * The alarm clock graphic interface
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class AlarmClockView extends JFrame {
 
 	/**
@@ -46,13 +53,16 @@ public class AlarmClockView extends JFrame {
 	private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 	private JPanel bottomPanel;
 	private JPanel armedPanel;
-	private JLabel ringingPanel;
+	private JLabel ringingPanel1;
+	private JLabel ringingPanel2;
 	private ImageIcon armedImage;
-	private ImageIcon ringingImage;
 	private ImageIcon armedImage_d;
 	private ImageIcon ringingImage_d;
 	private JLabel ringingPanel_d;
 	private JPanel armedPanel_d;
+	private ImageIcon ringingImage1;
+	private ImageIcon ringingImage2;
+	private boolean ringState = false;
 
 	public AlarmClockView(AlarmClockInterface alarmClock) {
 
@@ -125,7 +135,9 @@ public class AlarmClockView extends JFrame {
 				.decode("#FF0000")));
 		this.bottomPanel.setPreferredSize(new Dimension(250, 46));
 
-		this.ringingImage = AlarmClockView.getImageIcon("img/ringing.png", 15,
+		this.ringingImage1 = AlarmClockView.getImageIcon("img/ringing.png", 16,
+				15);
+		this.ringingImage2 = AlarmClockView.getImageIcon("img/ringing.png", 14,
 				15);
 		this.armedImage = AlarmClockView.getImageIcon("img/ac.png", 0, 0);
 		this.ringingImage_d = AlarmClockView.getImageIcon("img/ringing_d.png",
@@ -137,8 +149,10 @@ public class AlarmClockView extends JFrame {
 		this.armedPanel.setBackground(Color.decode("#000000"));
 		this.armedPanel.add(new JLabel(this.armedImage));
 		this.armedPanel.add(this.ringLabel);
-		this.ringingPanel = new JLabel(this.ringingImage);
-		this.ringingPanel.setPreferredSize(new Dimension(30, 26));
+		this.ringingPanel1 = new JLabel(this.ringingImage1);
+		this.ringingPanel1.setPreferredSize(new Dimension(30, 26));
+		this.ringingPanel2 = new JLabel(this.ringingImage2);
+		this.ringingPanel2.setPreferredSize(new Dimension(30, 26));
 		this.armedPanel_d = new JPanel();
 		this.armedPanel_d.setPreferredSize(new Dimension(150, 26));
 		this.armedPanel_d.setBackground(Color.decode("#000000"));
@@ -148,8 +162,8 @@ public class AlarmClockView extends JFrame {
 		this.ringingPanel_d.setPreferredSize(new Dimension(30, 26));
 
 		this.datePanel.add(this.dateLabel);
-		this.bottomPanel.add(this.ringingPanel, BorderLayout.WEST);
-		this.bottomPanel.add(this.armedPanel, BorderLayout.EAST);
+		this.bottomPanel.add(this.ringingPanel_d, BorderLayout.WEST);
+		this.bottomPanel.add(this.armedPanel_d, BorderLayout.EAST);
 
 		this.getContentPane().add(this.datePanel, BorderLayout.CENTER);
 		this.getContentPane().add(this.bottomPanel, BorderLayout.SOUTH);
@@ -163,6 +177,17 @@ public class AlarmClockView extends JFrame {
 		}
 	}
 
+	/**
+	 * Get an image icon from icon path at the x and y index from panel
+	 * 
+	 * @param path
+	 *            {@link String} - Icon path
+	 * @param x
+	 *            {@link Integer int} - The horizontal index (in px)
+	 * @param y
+	 *            {@link Integer int} - The vertical index (in px)
+	 * @return {@link ImageIcon} - The image icon get from the icon
+	 */
 	private static ImageIcon getImageIcon(String path, int x, int y) {
 		ImageIcon imageIcon = new ImageIcon(path);
 		Image img = imageIcon.getImage();
@@ -174,6 +199,10 @@ public class AlarmClockView extends JFrame {
 		return imageIcon;
 	}
 
+	/**
+	 * Close the graphic alarm clock environnement, and stop the
+	 * {@link ClockManager alarm clock manager}
+	 */
 	public void close() {
 		try {
 			this.alarmClock.stop();
@@ -182,17 +211,39 @@ public class AlarmClockView extends JFrame {
 		}
 		this.dispose();
 	}
-	
-	boolean askQuit() {
+
+	/**
+	 * Ask by {@link JOptionPane a frame} to the user if he wants really leave
+	 * 
+	 * @return {@link Boolean boolean} - <code>true</code> if the user replied
+	 *         "yes", <code>false</code> otherwise
+	 */
+	protected boolean askQuit() {
 		return JOptionPane.showConfirmDialog(this,
 				"Do you want to throw this alarm clock?", "Quit? :(",
 				JOptionPane.YES_NO_OPTION) == 0;
 	}
-	
+
+	/**
+	 * Set the date on which the alarm clock should ring
+	 * 
+	 * @param date
+	 *            {@link Date} - The date to set
+	 */
 	public void setRingDate(Date date) {
 		this.ringLabel.setText(this.format.format(date));
 	}
 
+	/**
+	 * Update the graphics components in dependence of the alarm clock states
+	 * 
+	 * @param date
+	 *            {@link Date} - The current date
+	 * @param armed
+	 *            {@link Boolean boolean} - If the alarm clock is armed
+	 * @param ringing
+	 *            {@link Boolean boolean} - If the alarm clock is ringing
+	 */
 	public void update(Date date, boolean armed, boolean ringing) {
 		this.repaint();
 		this.dateLabel.setText(this.format.format(date));
@@ -200,7 +251,12 @@ public class AlarmClockView extends JFrame {
 		this.ringing = ringing;
 		this.bottomPanel.removeAll();
 		if (this.ringing) {
-			this.bottomPanel.add(this.ringingPanel, BorderLayout.WEST);
+			if (this.ringState) {
+				this.bottomPanel.add(this.ringingPanel1, BorderLayout.WEST);
+			} else {
+				this.bottomPanel.add(this.ringingPanel2, BorderLayout.WEST);
+			}
+			this.ringState ^= true;
 		} else {
 			this.bottomPanel.add(this.ringingPanel_d, BorderLayout.WEST);
 		}

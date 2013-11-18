@@ -5,19 +5,27 @@ import java.io.FileInputStream;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
+/**
+ * A thread object to play a sound (the alarm clock ring)
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class SoundPlayer extends Thread {
 
 	private String soundPath;
 	private AudioStream as;
 
 	/**
-	 * @param soundPath
+	 * Constructor using the sound path
+	 * @param soundPath {@link String} - The sound path
 	 */
 	public SoundPlayer(String soundPath) {
 		super();
 		this.soundPath = soundPath;
 	}
 
+	@Override
 	public void run() {
 		try {
 			FileInputStream inputStream = new FileInputStream(this.soundPath);
@@ -30,7 +38,6 @@ public class SoundPlayer extends Thread {
 	
 	@Override
 	public void interrupt() {
-		System.err.println("Interrupt");
 		AudioPlayer.player.stop(this.as);
 		super.interrupt();
 	}

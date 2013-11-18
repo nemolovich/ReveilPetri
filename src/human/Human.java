@@ -8,9 +8,12 @@ import javax.swing.UIManager;
 
 import alarmClock.AlarmClockInterface;
 
-
-
-
+/**
+ * The human user item
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class Human extends UnicastRemoteObject implements HumanInterface {
 
 	/**
@@ -26,7 +29,8 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 	private SoundPlayer soundPlayer;
 
 	/**
-	 * @param alarmClock
+	 * The human user constructor using the used remote alarm clock
+	 * @param alarmClock {@link AlarmClockInterface} - The remote alarm clock
 	 * @throws RemoteException
 	 */
 	public Human(AlarmClockInterface alarmClock) throws RemoteException {
@@ -46,11 +50,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see human.HumanInterface#goToSleep()
-	 */
 	@Override
 	public void goToSleep() {
 		System.out.println("Going to sleep...");
@@ -67,11 +66,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see human.HumanInterface#gotNightmares()
-	 */
 	@Override
 	public void gotNightmares() {
 		System.out.println("These boring nightmares...");
@@ -88,11 +82,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see human.HumanInterface#arme()
-	 */
 	@Override
 	public void arme(Date date) {
 		System.out.println("Arming alarm clock...");
@@ -116,11 +105,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		this.view.update(date);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see human.HumanInterface#disarme()
-	 */
 	@Override
 	public void disarme() {
 		System.out.println("It's time to wake up...");
@@ -157,11 +141,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see human.HumanInterface#gotRing()
-	 */
 	@Override
 	public void gotRing() {
 		System.out.println("Ding ding ding ding, ding ding ding ding...");
@@ -212,11 +191,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		this.asleep = asleep;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -227,11 +201,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -250,11 +219,6 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Human:\n\tawake=" + this.awake + ",\n\tsleepy=" + this.sleepy

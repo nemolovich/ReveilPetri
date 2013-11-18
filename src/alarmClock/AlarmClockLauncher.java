@@ -9,6 +9,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.ExportException;
 
+/**
+ * The alarm clock launcher
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class AlarmClockLauncher {
 
 	/**

@@ -22,13 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-
-
 /**
- * A JDialog to get a {@link String} from a {@link JTextField}
+ * A {@link JDialog} to get a {@link Date} from two {@link JTextField}
  * 
- * @author Grumpy Group
- * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
  */
 public class GetDateDialog extends JDialog implements ActionListener,
 		KeyListener {
@@ -48,8 +46,8 @@ public class GetDateDialog extends JDialog implements ActionListener,
 	private JButton cancelButton = new JButton("Cancel");
 
 	/**
-	 * A JDialog to get a {@link java.util.Date Date} value from a
-	 * {@link JTextField}
+	 * A JDialog to get a {@link java.util.Date Date} value from the
+	 * {@link JTextField JTextFields}
 	 * 
 	 * @param owner
 	 *            {@link JFrame} - The owner frame
@@ -182,6 +180,10 @@ public class GetDateDialog extends JDialog implements ActionListener,
 		this.setVisible(true);
 	}
 
+	/**
+	 * Returns the date value of the compute date from fields
+	 * @return {@link Date} - The date in fields
+	 */
 	public Date getValue() {
 		return this.value;
 	}
