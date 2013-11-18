@@ -1,4 +1,4 @@
-package alarmClock.ui;
+package alarmClock.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -183,7 +182,7 @@ public class AlarmClockView extends JFrame {
 		}
 		this.dispose();
 	}
-
+	
 	boolean askQuit() {
 		return JOptionPane.showConfirmDialog(this,
 				"Do you want to throw this alarm clock?", "Quit? :(",
@@ -211,8 +210,4 @@ public class AlarmClockView extends JFrame {
 			this.bottomPanel.add(this.armedPanel_d, BorderLayout.EAST);
 		}
 	}
-
-	// public static void main(String[] args) {
-	// new AlarmClockView();
-	// }
 }

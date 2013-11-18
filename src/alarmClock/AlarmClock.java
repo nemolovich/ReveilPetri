@@ -7,7 +7,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
 import java.util.Date;
 
-import alarmClock.ui.ClockManager;
+import javax.swing.UIManager;
+
+import alarmClock.gui.ClockManager;
 
 import complementary.MiamMiam;
 
@@ -28,6 +30,12 @@ public class AlarmClock extends UnicastRemoteObject implements
 
 	public AlarmClock() throws RemoteException {
 		super();
+		try {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.miamMiam=MiamMiam.getInstance();
 		this.clockManager = new ClockManager(this);
 		this.clockManager.start();
@@ -42,12 +50,13 @@ public class AlarmClock extends UnicastRemoteObject implements
 	 * @see alarmClock.AlarmClockInterface#arme()
 	 */
 	@Override
-	public void arme() throws RemoteException {
+	public void arme(Date date) throws RemoteException {
 		System.out.println("Arming alarmclock...");
 		if (!this.disarmed) {
 			System.err.println("The alarm clock is not disarmed yet!");
 			return;
 		}
+		this.ringDate=date;
 		this.miamMiam.addToken();
 		this.disarmed = false;
 		this.armed = true;
@@ -76,7 +85,6 @@ public class AlarmClock extends UnicastRemoteObject implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see alarmClock.AlarmClockInterface#autoDisarme()
 	 */
 	@Override

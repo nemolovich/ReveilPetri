@@ -1,8 +1,10 @@
-package human;import human.ui.HumanView;
+package human;import human.gui.HumanView;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
+
+import javax.swing.UIManager;
 
 import alarmClock.AlarmClockInterface;
 
@@ -21,6 +23,7 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 
 	private AlarmClockInterface alarmClock;
 	private HumanView view;
+	private SoundPlayer soundPlayer;
 
 	/**
 	 * @param alarmClock
@@ -28,6 +31,12 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 	 */
 	public Human(AlarmClockInterface alarmClock) throws RemoteException {
 		super();
+		try {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.view=new HumanView(this);
 		this.alarmClock = alarmClock;
 		try {
@@ -85,7 +94,7 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 	 * @see human.HumanInterface#arme()
 	 */
 	@Override
-	public void arme() {
+	public void arme(Date date) {
 		System.out.println("Arming alarm clock...");
 		if (!this.awake) {
 			System.err.println("You are not awake yet!");
@@ -93,7 +102,7 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 		try {
 			if(this.alarmClock.inArming()) {
-				this.alarmClock.arme();
+				this.alarmClock.arme(date);
 			}
 			else {
 				System.err.println("Can not arm alarm clock!");
@@ -104,11 +113,7 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 		this.awake = false;
 		this.asleep = true;
-		try {
-			this.view.update(this.alarmClock.getRingDate());
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		this.view.update(date);
 	}
 
 	/*
@@ -141,6 +146,10 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 		this.sleepy = false;
 		this.awake = true;
+		if(this.soundPlayer!=null) {
+			this.soundPlayer.interrupt();
+			this.soundPlayer=null;
+		}
 		try {
 			this.view.update(this.alarmClock.getRingDate());
 		} catch (RemoteException e) {
@@ -162,11 +171,17 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		}
 		this.asleep = false;
 		this.sleepy = true;
+		this.playSound("sound/ring.wav");
 		try {
 			this.view.update(this.alarmClock.getRingDate());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public synchronized void playSound(final String soundPath) {
+		this.soundPlayer=new SoundPlayer("sound/ring.wav");
+		this.soundPlayer.start();
 	}
 
 	public Date getRingDate() throws RemoteException {

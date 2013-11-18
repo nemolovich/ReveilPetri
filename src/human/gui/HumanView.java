@@ -1,4 +1,4 @@
-package human.ui;
+package human.gui;
 
 import human.Human;
 
@@ -111,7 +111,9 @@ public class HumanView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource().equals(this.arme)) {
-			this.human.arme();
+			GetDateDialog dialog = new GetDateDialog(this);
+			Date date=dialog.getValue();
+			this.human.arme(date);
 		}
 		else if(event.getSource().equals(this.disarme)) {
 			this.human.disarme();

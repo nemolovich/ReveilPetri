@@ -8,7 +8,7 @@ import java.util.Date;
 
 public interface AlarmClockInterface extends Remote {
 
-	public abstract void arme() throws RemoteException;
+	public abstract void arme(Date date) throws RemoteException;
 
 	public abstract void ring() throws RemoteException;
 
