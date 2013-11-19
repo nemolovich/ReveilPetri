@@ -1,32 +1,32 @@
 ------------------------------------------------------------
-C0 -- armer --> C1
+C0 -- armerHumain --> C1
 ------------------------------------------------------------
 C1 -- spontané --> C2
-C1 -- armer --> C3
+C1 -- armerRéveil --> C3
 ------------------------------------------------------------
 C2 -- endormir --> C1
-C2 -- armer --> C4
+C2 -- armerRéveil --> C4
 ------------------------------------------------------------
 C3 -- spontané --> C4
 C3 -- sonner --> C5
 ------------------------------------------------------------
-C4 -- désarmé --> C6
+C4 -- désarmerHumain --> C6
 C4 -- endormir --> C3
 C4 -- sonner --> C7
 ------------------------------------------------------------
 C5 -- sonnerie --> C7
 C5 -- spontané --> C7
-C5 -- sonner --> C5
+C5 -- resonner --> C5
 ------------------------------------------------------------
 C6 -- désarmer --> C0
 C6 -- sonner --> C8
 ------------------------------------------------------------
-C7 -- désarmé --> C8
+C7 -- désarmerHumain --> C8
 C7 -- endormir --> C5
-C7 -- sonner --> C7
+C7 -- resonner --> C7
 ------------------------------------------------------------
-C8 -- désarmer --> C0
-C8 -- sonner --> C8
+C8 -- désarmerSonne --> C0
+C8 -- resonner --> C8
 ------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ Marking
 0   Sonne
 0   En cours armement
 0   En cours désarmement
-1   P 9
+1   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ Marking
 0   Sonne
 1   En cours armement
 0   En cours désarmement
-0   P 9
+0   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ Marking
 0   Sonne
 1   En cours armement
 0   En cours désarmement
-0   P 9
+0   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ Marking
 0   Sonne
 0   En cours armement
 0   En cours désarmement
-1   P 9
+1   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ Marking
 0   Sonne
 0   En cours armement
 0   En cours désarmement
-1   P 9
+1   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ Marking
 1   Sonne
 0   En cours armement
 0   En cours désarmement
-1   P 9
+1   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ Marking
 0   Sonne
 0   En cours armement
 1   En cours désarmement
-0   P 9
+0   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ Marking
 1   Sonne
 0   En cours armement
 0   En cours désarmement
-1   P 9
+1   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ Marking
 1   Sonne
 0   En cours armement
 1   En cours désarmement
-0   P 9
+0   MiamMiam
 
 Firing Domain
 --------------------------------------------------------------------------------

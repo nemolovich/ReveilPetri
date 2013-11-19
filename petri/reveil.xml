@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/reveil.xml">
+<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/ReveilPetri/petri/reveil.xml">
   <place id="1" label="Armé" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="378.00000000000006" y="241.00000000000003"/> 
@@ -33,28 +33,28 @@
 
   <transition id="2" label="désarmer"  eft="0" lft="inf"  obs="1"> 
      <graphics color="0"> 
-        <position x="459.00000000000006" y="194.00000000000003"/> 
+        <position x="459.0" y="194.0"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="3" label="sonner"  eft="0" lft="inf" eft_param="480" lft_param="480"  obs="1"> 
+  <transition id="3" label="sonner"  eft="480" lft="480" eft_param="480" lft_param="480"  obs="1"> 
      <graphics color="0"> 
         <position x="318.00000000000006" y="228.00000000000003"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="4" label="sonner"  eft="0" lft="inf" eft_param="5" lft_param="5"  obs="1"> 
+  <transition id="4" label="resonner"  eft="5" lft="5" eft_param="5" lft_param="5"  obs="1"> 
      <graphics color="0"> 
-        <position x="121.00000000000006" y="159.00000000000009"/> 
+        <position x="121.00000000000006" y="159.0000000000001"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 
 
-  <transition id="5" label="désarmer"  eft="0" lft="inf"  obs="1"> 
+  <transition id="5" label="désarmerSonne"  eft="0" lft="inf"  obs="1"> 
      <graphics color="0"> 
-        <position x="304.00000000000006" y="82.00000000000003"/> 
+        <position x="304.0" y="82.00000000000003"/> 
         <deltaLabel deltax="10" deltay="10"/> 
      </graphics> 
   </transition> 

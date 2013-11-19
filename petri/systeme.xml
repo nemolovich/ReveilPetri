@@ -64,7 +64,7 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <transition id="1" label="armer"  eft="840" lft="1380" eft_param="840" lft_param="1380"  obs="1"> 
+  <transition id="1" label="armerHumain"  eft="840" lft="1380" eft_param="840" lft_param="1380"  obs="1"> 
      <graphics color="0"> 
         <position x="350.0" y="224.0"/> 
         <deltaLabel deltax="46.0" deltay="5.0"/> 
@@ -85,10 +85,10 @@
      </graphics> 
   </transition> 
 
-  <transition id="4" label="désarmé"  eft="0" lft="inf"  obs="1"> 
+  <transition id="4" label="désarmerHumain"  eft="0" lft="inf"  obs="1"> 
      <graphics color="0"> 
         <position x="240.0" y="45.0"/> 
-        <deltaLabel deltax="-39.0" deltay="-6.0"/> 
+        <deltaLabel deltax="-13.0" deltay="-20.0"/> 
      </graphics> 
   </transition> 
 
@@ -106,10 +106,10 @@
      </graphics> 
   </transition> 
 
-  <transition id="7" label="armer"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
+  <transition id="7" label="armerRéveil"  eft="0" lft="inf" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="854.0" y="224.0"/> 
-        <deltaLabel deltax="38.0" deltay="-7.0"/> 
+        <deltaLabel deltax="55.0" deltay="-9.0"/> 
      </graphics> 
   </transition> 
 
@@ -123,11 +123,11 @@
   <transition id="9" label="sonner"  eft="480" lft="480" eft_param="480" lft_param="480"  obs="1"> 
      <graphics color="0"> 
         <position x="766.0" y="338.0"/> 
-        <deltaLabel deltax="38.0" deltay="-5.0"/> 
+        <deltaLabel deltax="53.0" deltay="-8.0"/> 
      </graphics> 
   </transition> 
 
-  <transition id="10" label="sonner"  eft="5" lft="5" eft_param="5" lft_param="5"  obs="1"> 
+  <transition id="10" label="resonner"  eft="5" lft="5" eft_param="5" lft_param="5"  obs="1"> 
      <graphics color="0"> 
         <position x="779.0" y="423.0"/> 
         <deltaLabel deltax="38.0" deltay="-7.0"/> 
