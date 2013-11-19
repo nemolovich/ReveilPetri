@@ -7,10 +7,19 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
 import java.util.Date;
 
-import alarmClock.ui.ClockManager;
+import javax.swing.UIManager;
+
+import alarmClock.gui.ClockManager;
 
 import complementary.MiamMiam;
 
+/**
+ *
+ * The alarm clock item
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class AlarmClock extends UnicastRemoteObject implements
 		AlarmClockInterface {
 
@@ -28,6 +37,12 @@ public class AlarmClock extends UnicastRemoteObject implements
 
 	public AlarmClock() throws RemoteException {
 		super();
+		try {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.miamMiam=MiamMiam.getInstance();
 		this.clockManager = new ClockManager(this);
 		this.clockManager.start();
@@ -36,28 +51,19 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.ringDate=cal.getTime();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see alarmClock.AlarmClockInterface#arme()
-	 */
 	@Override
-	public void arme() throws RemoteException {
+	public void arme(Date date) throws RemoteException {
 		System.out.println("Arming alarmclock...");
 		if (!this.disarmed) {
 			System.err.println("The alarm clock is not disarmed yet!");
 			return;
 		}
+		this.ringDate=date;
 		this.miamMiam.addToken();
 		this.disarmed = false;
 		this.armed = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see alarmClock.AlarmClockInterface#ring()
-	 */
 	@Override
 	public void ring() throws RemoteException {
 		System.out.println("Ringing alarmclock...");
@@ -74,11 +80,6 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.ringing = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see alarmClock.AlarmClockInterface#autoDisarme()
-	 */
 	@Override
 	public void autoDisarme() throws RemoteException {
 		System.out.println("Auto-disarming alarmclock...");
@@ -91,11 +92,6 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.disarmed = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see alarmClock.AlarmClockInterface#disarme()
-	 */
 	@Override
 	public void disarme() throws RemoteException {
 		System.out.println("Disarming alarmclock...");
@@ -149,27 +145,14 @@ public class AlarmClock extends UnicastRemoteObject implements
 		return this.miamMiam.inDisarming();
 	}
 
+	/**
+	 * Say if the alarm clock is disarmed
+	 * @return {@link Boolean boolean} - <code>true</code> if the alarm clock is disarmed
+	 */
 	public boolean isDisarmed() {
 		return this.disarmed;
 	}
 
-	public void setDisarmed(boolean disarmed) {
-		this.disarmed = disarmed;
-	}
-
-	public void setArmed(boolean armed) {
-		this.armed = armed;
-	}
-
-	public void setRinging(boolean ringing) {
-		this.ringing = ringing;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -180,11 +163,6 @@ public class AlarmClock extends UnicastRemoteObject implements
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -203,11 +181,6 @@ public class AlarmClock extends UnicastRemoteObject implements
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "AlarmClock:\n\tdisarmed=" + this.disarmed + ",\n\tarmed="

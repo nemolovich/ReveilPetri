@@ -12,11 +12,14 @@ import javax.swing.JOptionPane;
 
 import alarmClock.AlarmClockInterface;
 
+/**
+ * The human launcher
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ *
+ */
 public class HumanLauncher {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 
 		AlarmClockInterface alarmClock = null;
@@ -52,7 +55,7 @@ public class HumanLauncher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		System.out.println("You are now ready!");
+		System.out.println("Congrats! You were born!");
 //		System.out.println(human.toString());
 //		@SuppressWarnings("resource")
 //		Scanner sc = new Scanner(System.in);

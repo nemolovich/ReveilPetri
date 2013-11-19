@@ -2,6 +2,16 @@ package complementary;
 
 import java.rmi.RemoteException;
 
+/**
+ * The complementary class managing the only token of global network to allow
+ * only one cycle
+ * <br/>
+ * <br/>
+ * <b>Remarque:</b> Singleton instance
+ * 
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ * 
+ */
 public class MiamMiam implements MiamMiamInterface {
 
 	private static MiamMiam instance = null;
@@ -9,11 +19,14 @@ public class MiamMiam implements MiamMiamInterface {
 	private boolean isDisarming = false;
 	private boolean isArming = false;
 
-
 	private MiamMiam() throws RemoteException {
 		super();
 	}
 
+	/**
+	 * Returns the singleton instance of the {@link MiamMiam complementary class}
+	 * @return {@link MiamMiam} - The complementary class instance
+	 */
 	public static MiamMiam getInstance() {
 		if (MiamMiam.instance == null) {
 			try {
@@ -25,11 +38,6 @@ public class MiamMiam implements MiamMiamInterface {
 		return MiamMiam.instance;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#inDisarming()
-	 */
 	@Override
 	public boolean inDisarming() {
 		if (!this.isMiamMiaming) {
@@ -41,11 +49,6 @@ public class MiamMiam implements MiamMiamInterface {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#inArming()
-	 */
 	@Override
 	public boolean inArming() {
 		if (!this.isMiamMiaming) {
@@ -57,19 +60,6 @@ public class MiamMiam implements MiamMiamInterface {
 		return true;
 	}
 
-	// public void getToken() {
-	// if(!this.isMiamMiaming) {
-	// System.err.println("No available token!");
-	// return;
-	// }
-	// this.isMiamMiaming=false;
-	// }
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#addToken()
-	 */
 	@Override
 	public void addToken() {
 		if (this.isMiamMiaming) {
@@ -79,65 +69,21 @@ public class MiamMiam implements MiamMiamInterface {
 		this.isMiamMiaming = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#isMiamMiaming()
-	 */
 	@Override
 	public boolean isMiamMiaming() {
 		return this.isMiamMiaming;
 	}
 
-	/**
-	 * @param isMiamMiaming
-	 *            the isMiamMiaming to set
-	 */
-	public void setMiamMiaming(boolean isMiamMiaming) {
-		this.isMiamMiaming = isMiamMiaming;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#isDisarming()
-	 */
 	@Override
 	public boolean isDisarming() {
 		return this.isDisarming;
 	}
 
-	/**
-	 * @param isDisarming
-	 *            the isDisarming to set
-	 */
-	public void setDisarming(boolean isDisarming) {
-		this.isDisarming = isDisarming;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see complementary.MiamMiamInterface#isArming()
-	 */
 	@Override
 	public boolean isArming() {
 		return this.isArming;
 	}
 
-	/**
-	 * @param isArming
-	 *            the isArming to set
-	 */
-	public void setArming(boolean isArming) {
-		this.isArming = isArming;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -148,11 +94,6 @@ public class MiamMiam implements MiamMiamInterface {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -171,11 +112,6 @@ public class MiamMiam implements MiamMiamInterface {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "MiamMiam:\n\tisMiamMiaming=" + this.isMiamMiaming
