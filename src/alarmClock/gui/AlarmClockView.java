@@ -28,6 +28,8 @@ import javax.swing.SwingConstants;
 
 import alarmClock.AlarmClockInterface;
 
+
+
 /**
  * 
  * The alarm clock graphic interface
@@ -143,6 +145,8 @@ public class AlarmClockView extends JFrame {
 		this.ringingImage_d = AlarmClockView.getImageIcon("img/ringing_d.png",
 				15, 15);
 		this.armedImage_d = AlarmClockView.getImageIcon("img/ac_d.png", 0, 0);
+		
+		this.setIconImage(this.armedImage.getImage());
 
 		this.armedPanel = new JPanel();
 		this.armedPanel.setPreferredSize(new Dimension(150, 26));

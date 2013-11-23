@@ -35,12 +35,17 @@ public class ClockManager extends Thread {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
 					Date currentDate = this.alarmClock.getCurrentDate();
+					Date ringDate = this.alarmClock.getRingDate();
 					this.clockView.update(currentDate,
 							this.alarmClock.isArmed(),
 							this.alarmClock.isRinging());
 					if (this.alarmClock.isArmed()) {
-						Date ringDate = this.alarmClock.getRingDate();
 						this.clockView.setRingDate(ringDate);
+						if (currentDate.after(ringDate)
+								|| currentDate.equals(ringDate)) {
+							this.alarmClock.ring();
+						}
+					} else if (this.alarmClock.isRinging()) {
 						if (currentDate.after(ringDate)
 								|| currentDate.equals(ringDate)) {
 							this.alarmClock.ring();

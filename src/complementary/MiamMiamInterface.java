@@ -1,6 +1,7 @@
 package complementary;
 
 
+
 /**
  * The {@link MiamMiam complementary class} interface
  * 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<TPN name="/Users/Nomyx/Public/Partage_U/2013-2014_M2/Formal_Software_Engineering/TP/Projet/ReveilPetri/petri/systeme_complementaire.xml">
+<TPN name="/home/nemo/git/ReveilPetri/petri/systeme_complementaire.xml">
   <place id="1" label="Reveillé" initialMarking="1" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="354.0" y="218.0"/> 
@@ -89,7 +89,7 @@
   <transition id="3" label="spontané"  eft="60" lft="720" eft_param="60" lft_param="720"  obs="1"> 
      <graphics color="0"> 
         <position x="159.0" y="307.0"/> 
-        <deltaLabel deltax="57.0" deltay="-6.0"/> 
+        <deltaLabel deltax="59.0" deltay="-10.0"/> 
      </graphics> 
   </transition> 
 
@@ -103,42 +103,42 @@
   <transition id="5" label="endormir"  eft="0" lft="inf"  obs="1"> 
      <graphics color="0"> 
         <position x="289.0" y="317.0"/> 
-        <deltaLabel deltax="44.0" deltay="-7.0"/> 
+        <deltaLabel deltax="47.0" deltay="-7.0"/> 
      </graphics> 
   </transition> 
 
   <transition id="6" label="désarmer"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="784.0" y="258.0"/> 
-        <deltaLabel deltax="47.0" deltay="-10.0"/> 
+        <deltaLabel deltax="52.0" deltay="-8.0"/> 
      </graphics> 
   </transition> 
 
   <transition id="7" label="armerRéveil"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="953.0" y="315.0"/> 
-        <deltaLabel deltax="48.0" deltay="-7.0"/> 
+        <deltaLabel deltax="60.0" deltay="-8.0"/> 
      </graphics> 
   </transition> 
 
   <transition id="8" label="désarmerSonne"  eft="0" lft="10" eft_param="0" lft_param="10"  obs="1"> 
      <graphics color="0"> 
         <position x="665.0" y="259.0"/> 
-        <deltaLabel deltax="-53.0" deltay="-7.0"/> 
+        <deltaLabel deltax="-57.0" deltay="-8.0"/> 
      </graphics> 
   </transition> 
 
   <transition id="9" label="sonner"  eft="480" lft="480" eft_param="480" lft_param="480"  obs="1"> 
      <graphics color="0"> 
         <position x="826.0" y="429.0"/> 
-        <deltaLabel deltax="49.0" deltay="-9.0"/> 
+        <deltaLabel deltax="65.0" deltay="-10.0"/> 
      </graphics> 
   </transition> 
 
   <transition id="10" label="resonner"  eft="5" lft="5" eft_param="5" lft_param="5"  obs="1"> 
      <graphics color="0"> 
         <position x="839.0" y="514.0"/> 
-        <deltaLabel deltax="38.0" deltay="-7.0"/> 
+        <deltaLabel deltax="46.0" deltay="-9.0"/> 
      </graphics> 
   </transition> 
 

@@ -1,9 +1,14 @@
-package human;import human.gui.HumanView;
+package human;
+
+import human.gui.HumanView;
+import human.utils.SoundPlayer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import alarmClock.AlarmClockInterface;
@@ -12,7 +17,7 @@ import alarmClock.AlarmClockInterface;
  * The human user item
  * 
  * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * 
  */
 public class Human extends UnicastRemoteObject implements HumanInterface {
 
@@ -23,14 +28,20 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 	private boolean awake = true;
 	private boolean sleepy = false;
 	private boolean asleep = false;
+	private Date startDate;
+	private Date sleepingDate;
 
 	private AlarmClockInterface alarmClock;
 	private HumanView view;
 	private SoundPlayer soundPlayer;
+	private static int mySelfWakeUpMinimum=30;
+	private static int armMinimum=10;
 
 	/**
 	 * The human user constructor using the used remote alarm clock
-	 * @param alarmClock {@link AlarmClockInterface} - The remote alarm clock
+	 * 
+	 * @param alarmClock
+	 *            {@link AlarmClockInterface} - The remote alarm clock
 	 * @throws RemoteException
 	 */
 	public Human(AlarmClockInterface alarmClock) throws RemoteException {
@@ -41,36 +52,54 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.view=new HumanView(this);
+		this.view = new HumanView(this);
 		this.alarmClock = alarmClock;
 		try {
 			alarmClock.setHuman(this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		this.startDate = Calendar.getInstance().getTime();
 	}
 
 	@Override
 	public void goToSleep() {
-		System.out.println("Going to sleep...");
+		System.out.println("[REQUEST] goToSleep() in process");
 		if (!this.sleepy) {
 			System.err.println("Your are not sleepy yet!");
+			System.out.println("[REQUEST] goToSleep() --> [FAIL]");
 			return;
 		}
+		this.sleepingDate=Calendar.getInstance().getTime();
 		this.sleepy = false;
 		this.asleep = true;
+		if (this.soundPlayer != null) {
+			this.soundPlayer.interrupt();
+			this.soundPlayer = null;
+		}
 		try {
 			this.view.update(this.alarmClock.getRingDate());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		System.out.println("[REQUEST] goToSleep() --> [OK]");
+		System.out.println("Going to sleep...");
 	}
 
 	@Override
 	public void gotNightmares() {
-		System.out.println("These boring nightmares...");
+		System.out.println("[REQUEST] gotNightmares() in process");
 		if (!this.asleep) {
 			System.err.println("You are not asleep yet!");
+			System.out.println("[REQUEST] gotNightmares() --> [FAIL]");
+			return;
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.startDate);
+		cal.add(Calendar.SECOND, Human.mySelfWakeUpMinimum);
+		if (cal.getTime().before(Calendar.getInstance().getTime())) {
+			System.err.println("You can not wake up yet!");
+			System.out.println("[REQUEST] gotNightmares() --> [FAIL]");
 			return;
 		}
 		this.asleep = false;
@@ -80,72 +109,95 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		System.out.println("[REQUEST] gotNightmares() --> [OK]");
+		System.out.println("These boring nightmares...");
 	}
 
 	@Override
 	public void arme(Date date) {
-		System.out.println("Arming alarm clock...");
+		System.out.println("[REQUEST] arme() in process");
 		if (!this.awake) {
 			System.err.println("You are not awake yet!");
+			System.out.println("[REQUEST] arme() --> [FAIL]");
+			return;
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.startDate);
+		cal.add(Calendar.SECOND, Human.armMinimum);
+		if(!cal.getTime().before(Calendar.getInstance().getTime())) {
+			System.err.println("You can not arm the alarm clock yet!");
+			System.out.println("[REQUEST] arme() --> [FAIL]");
 			return;
 		}
 		try {
-			if(this.alarmClock.inArming()) {
+			if (this.alarmClock.inArming()) {
 				this.alarmClock.arme(date);
-			}
-			else {
+			} else {
 				System.err.println("Can not arm alarm clock!");
+				System.out.println("[REQUEST] arme() --> [FAIL]");
 				return;
 			}
 		} catch (RemoteException e) {
+			System.out.println("[REQUEST] arme() --> [FAIL]");
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(this.view,
+					"The connection with alarm clock has been lost\n"
+							+ "Program will exit now", "Connection lost x)",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 		this.awake = false;
 		this.asleep = true;
 		this.view.update(date);
+		System.out.println("[REQUEST] arme() --> [OK]");
+		System.out.println("Alarm clock armed");
 	}
 
 	@Override
 	public void disarme() {
-		System.out.println("It's time to wake up...");
+		System.out.println("[REQUEST] disarme() in process");
 		if (!this.sleepy) {
 			System.err.println("You are not sleepy yet!");
+			System.out.println("[REQUEST] disarme() --> [FAIL]");
 			return;
 		}
 		try {
-			if(this.alarmClock.inDisarming()) {
-				if(this.alarmClock.isArmed()) {
+			if (this.alarmClock.inDisarming()) {
+				if (this.alarmClock.isArmed()) {
 					this.alarmClock.disarme();
-				}
-				else if(this.alarmClock.isRinging()) {
+				} else if (this.alarmClock.isRinging()) {
 					this.alarmClock.autoDisarme();
 				}
-			}
-			else {
+			} else {
 				System.err.println("Can not disarme alarm clock!");
+				System.out.println("[REQUEST] disarme() --> [FAIL]");
 				return;
 			}
 		} catch (RemoteException e) {
+			System.out.println("[REQUEST] disarme() --> [FAIL]");
 			e.printStackTrace();
 		}
 		this.sleepy = false;
 		this.awake = true;
-		if(this.soundPlayer!=null) {
+		if (this.soundPlayer != null) {
 			this.soundPlayer.interrupt();
-			this.soundPlayer=null;
+			this.soundPlayer = null;
 		}
 		try {
 			this.view.update(this.alarmClock.getRingDate());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		System.out.println("[REQUEST] disarme() --> [OK]");
+		System.out.println("It's time to wake up...");
 	}
 
 	@Override
 	public void gotRing() {
-		System.out.println("Ding ding ding ding, ding ding ding ding...");
+		System.out.println("[REQUEST] gotRing() in process");
 		if (!this.asleep) {
 			System.err.println("You are not asleep yet!");
+			System.out.println("[REQUEST] gotRing() --> [FAIL]");
 			return;
 		}
 		this.asleep = false;
@@ -156,11 +208,17 @@ public class Human extends UnicastRemoteObject implements HumanInterface {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		System.out.println("[REQUEST] gotRing() --> [OK]");
+		System.out.println("Ding ding ding ding, ding ding ding ding...");
 	}
 
 	public synchronized void playSound(final String soundPath) {
-		this.soundPlayer=new SoundPlayer("sound/ring.wav");
+		this.soundPlayer = new SoundPlayer("sound/ring.wav");
 		this.soundPlayer.start();
+	}
+	
+	public Date getStartDate() throws RemoteException {
+		return this.startDate;
 	}
 
 	public Date getRingDate() throws RemoteException {

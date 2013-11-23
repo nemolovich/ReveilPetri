@@ -1,4 +1,4 @@
-package human;
+package human.utils;
 
 import java.io.FileInputStream;
 

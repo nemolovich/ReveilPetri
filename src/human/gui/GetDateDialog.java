@@ -152,6 +152,7 @@ public class GetDateDialog extends JDialog implements ActionListener,
 		entryPanel.add(pickerPanel);
 		
 		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MINUTE, 1);
 		this.hourField.setText(String.format("%02d",
 				cal.get(Calendar.HOUR_OF_DAY)));
 		this.minuteField.setText(String.format("%02d",

@@ -1,4 +1,7 @@
-package human;
+package human.main;
+
+
+import human.Human;
 
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -9,6 +12,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import alarmClock.AlarmClockInterface;
 
@@ -25,6 +29,12 @@ public class HumanLauncher {
 		AlarmClockInterface alarmClock = null;
 		int port = 1095;
 		String url = null;
+		try {
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			url = "//" + InetAddress.getLocalHost().getHostName() + ":" + port
 					+ "/AlarmClock";

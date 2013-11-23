@@ -1,4 +1,4 @@
-package alarmClock;
+package alarmClock.main;
 
 import java.net.BindException;
 import java.net.InetAddress;
@@ -8,6 +8,8 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.ExportException;
+
+import alarmClock.AlarmClock;
 
 /**
  * The alarm clock launcher

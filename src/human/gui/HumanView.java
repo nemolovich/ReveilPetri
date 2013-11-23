@@ -1,5 +1,6 @@
 package human.gui;
 
+
 import human.Human;
 
 import java.awt.BorderLayout;
@@ -112,6 +113,9 @@ public class HumanView extends JFrame implements ActionListener {
 		if (date != null) {
 			this.label.setText("Alarm Clock: " + this.format.format(date));
 		}
+		else {
+			this.label.setText("Alarm Clock: null");
+		}
 		this.repaint();
 	}
 
@@ -141,9 +145,12 @@ public class HumanView extends JFrame implements ActionListener {
 		if (event.getSource().equals(this.arme)) {
 			GetDateDialog dialog = new GetDateDialog(this);
 			Date date = dialog.getValue();
-			this.human.arme(date);
+			if(date!=null) {
+				this.human.arme(date);
+			}
 		} else if (event.getSource().equals(this.disarme)) {
 			this.human.disarme();
+			this.update((Date)null);
 		} else if (event.getSource().equals(this.goToSleep)) {
 			this.human.goToSleep();
 		} else if (event.getSource().equals(this.gotNightmares)) {

@@ -2,6 +2,7 @@ package complementary;
 
 import java.rmi.RemoteException;
 
+
 /**
  * The complementary class managing the only token of global network to allow
  * only one cycle
