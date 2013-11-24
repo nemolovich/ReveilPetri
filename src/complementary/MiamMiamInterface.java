@@ -9,6 +9,11 @@ package complementary;
  * 
  */
 public interface MiamMiamInterface {
+	
+	/**
+	 * To reduce the waiting times
+	 */
+	public static final boolean TESTING=true;
 
 	/**
 	 * Say if the alarm clock is in disarming state

@@ -1,5 +1,8 @@
 alarmClock
 alarmClock.gui
+alarmClock.main
 complementary
 human
 human.gui
+human.main
+human.utils

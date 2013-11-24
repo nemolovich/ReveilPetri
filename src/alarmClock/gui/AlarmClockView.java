@@ -76,6 +76,7 @@ public class AlarmClockView extends JFrame {
 		this.setTitle("Alarm Clock");
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		this.setIconImage(new ImageIcon("img/clock_icon.png").getImage());
 
 		/*
 		 * To define the close operation
@@ -145,8 +146,6 @@ public class AlarmClockView extends JFrame {
 		this.ringingImage_d = AlarmClockView.getImageIcon("img/ringing_d.png",
 				15, 15);
 		this.armedImage_d = AlarmClockView.getImageIcon("img/ac_d.png", 0, 0);
-		
-		this.setIconImage(this.armedImage.getImage());
 
 		this.armedPanel = new JPanel();
 		this.armedPanel.setPreferredSize(new Dimension(150, 26));

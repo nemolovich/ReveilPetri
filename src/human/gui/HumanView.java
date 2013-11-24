@@ -2,6 +2,7 @@ package human.gui;
 
 
 import human.Human;
+import human.HumanInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,9 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +33,7 @@ public class HumanView extends JFrame implements ActionListener {
 	 * ID
 	 */
 	private static final long serialVersionUID = -2823987526485659657L;
-	private Human human;
+	private HumanInterface human;
 	private int frameWidth = 200;
 	private int frameHeight = 185;
 	private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
@@ -43,13 +46,13 @@ public class HumanView extends JFrame implements ActionListener {
 	/**
 	 * Constructor using a {@link Human} instance
 	 * 
-	 * @param human
+	 * @param human2
 	 *            {@link Human} - The human to synchronize with this interface
 	 */
-	public HumanView(Human human) {
+	public HumanView(HumanInterface human2) {
 
 		super();
-		this.human = human;
+		this.human = human2;
 
 		this.setSize(this.frameWidth, this.frameHeight);
 		this.setMinimumSize(new Dimension(this.frameWidth, this.frameHeight));
@@ -57,6 +60,7 @@ public class HumanView extends JFrame implements ActionListener {
 		this.setTitle("Client");
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		this.setIconImage(new ImageIcon("img/human_icon.png").getImage());
 
 		/*
 		 * To define the close operation
@@ -106,10 +110,14 @@ public class HumanView extends JFrame implements ActionListener {
 	 *            {@link Date} - The current alarm clock date
 	 */
 	public void update(Date date) {
-		this.arme.setEnabled(this.human.isAwake());
-		this.disarme.setEnabled(this.human.isSleepy());
-		this.gotNightmares.setEnabled(this.human.isAsleep());
-		this.goToSleep.setEnabled(this.human.isSleepy());
+		try {
+			this.arme.setEnabled(this.human.isAwake());
+			this.disarme.setEnabled(this.human.isSleepy());
+			this.gotNightmares.setEnabled(this.human.isAsleep());
+			this.goToSleep.setEnabled(this.human.isSleepy());
+		} catch (RemoteException e) {
+			// Remote error
+		}
 		if (date != null) {
 			this.label.setText("Alarm Clock: " + this.format.format(date));
 		}
@@ -117,6 +125,20 @@ public class HumanView extends JFrame implements ActionListener {
 			this.label.setText("Alarm Clock: null");
 		}
 		this.repaint();
+	}
+	
+	/**
+	 * Enable/Disable the "{@link HumanView#gotNightmares Got nightmares}" button
+	 */
+	public void setSelfWakeUp(boolean enabled) {
+		this.gotNightmares.setEnabled(enabled);
+	}
+	
+	/**
+	 * Enable/Disable the "{@link HumanView#gotNightmares Arm alarm clock}" button
+	 */
+	public void setArm(boolean enabled) {
+		this.arme.setEnabled(enabled);
 	}
 
 	/**
@@ -142,19 +164,23 @@ public class HumanView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (event.getSource().equals(this.arme)) {
-			GetDateDialog dialog = new GetDateDialog(this);
-			Date date = dialog.getValue();
-			if(date!=null) {
-				this.human.arme(date);
+		try {
+			if (event.getSource().equals(this.arme)) {
+				GetDateDialog dialog = new GetDateDialog(this);
+				Date date = dialog.getValue();
+				if(date!=null) {
+					this.human.arme(date);
+				}
+			} else if (event.getSource().equals(this.disarme)) {
+				this.human.disarme();
+				this.update((Date)null);
+			} else if (event.getSource().equals(this.goToSleep)) {
+				this.human.goToSleep();
+			} else if (event.getSource().equals(this.gotNightmares)) {
+				this.human.gotNightmares();
 			}
-		} else if (event.getSource().equals(this.disarme)) {
-			this.human.disarme();
-			this.update((Date)null);
-		} else if (event.getSource().equals(this.goToSleep)) {
-			this.human.goToSleep();
-		} else if (event.getSource().equals(this.gotNightmares)) {
-			this.human.gotNightmares();
+		} catch (RemoteException e) {
+			// Remote error
 		}
 	}
 

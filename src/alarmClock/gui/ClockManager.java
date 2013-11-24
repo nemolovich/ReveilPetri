@@ -9,7 +9,7 @@ import alarmClock.AlarmClockInterface;
  * The alarm clock manager: synchronize the {@link AlarmClockView alarm clock
  * view} with the {@link AlarmClockInterface alarm clock item}
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, NoÃ©mie RULLIER
+ * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
  * 
  */
 public class ClockManager extends Thread {

@@ -48,4 +48,15 @@ public interface HumanInterface extends Remote {
 	 */
 	public abstract void gotRing() throws RemoteException;
 
+
+	public abstract boolean isAwake() throws RemoteException;
+
+	public abstract boolean isSleepy() throws RemoteException;
+
+	public abstract boolean isAsleep() throws RemoteException;
+
+	public abstract Date getWakeUpDate() throws RemoteException;
+
+	public abstract Date getSleepingDate() throws RemoteException;
+
 }

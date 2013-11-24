@@ -4,6 +4,8 @@ import human.HumanInterface;
 
 import java.rmi.RemoteException;
 
+import complementary.MiamMiam;
+
 /**
  * The message manager
  * 
@@ -14,15 +16,13 @@ public class MessageTransmitter extends Thread {
 
 	private HumanInterface human;
 	private AlarmClockInterface alarm;
-	private boolean inTransmition=false;
+	private boolean inTransmition = false;
 
 	/**
-	 * @return
+	 * Maximum time to transfert the message in secondes
 	 */
-	public static MessageTransmitter getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static final int TEST_maxMessageTransfertTime = 5;
+	private static final int maxMessageTransfertTime = 10;
 
 	/**
 	 * @param human
@@ -35,19 +35,30 @@ public class MessageTransmitter extends Thread {
 		this.human = human;
 		this.alarm = alarm;
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Thread#run()
-	 */
+
 	@Override
 	public void run() {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
-					if(this.alarm.isRinging() && this.inTransmition) {
-						Thread.sleep(5000);
+					if (this.alarm.isRinging() && this.inTransmition) {
+						int randomTime;
+						if (MiamMiam.TESTING) {
+							randomTime = 3 + (int) (Math.random() * MessageTransmitter.TEST_maxMessageTransfertTime);
+							System.out
+							.println("[INFO] The message tranfert will take "
+									+ randomTime + " seconde"+(randomTime>1?"s":""));
+						} else {
+							randomTime = (int) (Math.random() * MessageTransmitter.maxMessageTransfertTime);
+							System.out
+							.println("[INFO] The message tranfert will take "
+									+ randomTime + " minute"+(randomTime>1?"s":""));
+						}
+						if (randomTime > 0) {
+							Thread.sleep(randomTime);
+						}
 						this.human.gotRing();
-						this.inTransmition=false;
+						this.inTransmition = false;
 					}
 				} catch (RemoteException e) {
 					e.printStackTrace();
@@ -58,10 +69,7 @@ public class MessageTransmitter extends Thread {
 			// Killed
 		}
 	}
-	
-	/**
-	 * @param inTransmition the inTransmition to set
-	 */
+
 	public void setInTransmition() {
 		this.inTransmition = true;
 	}

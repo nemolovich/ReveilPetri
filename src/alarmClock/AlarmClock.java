@@ -27,9 +27,20 @@ public class AlarmClock extends UnicastRemoteObject implements
 	 * ID
 	 */
 	private static final long serialVersionUID = -4805647396138407720L;
+	
+	/* ********************************* *
+	 *            HUMAN STATES           *
+	 * ********************************* */
 	private boolean disarmed = true;
 	private boolean armed = false;
 	private boolean ringing = false;
+
+	/* ********************************* *
+	 *   ALARM CLOCK TIMES CONSTRAINTS   *
+	 * ********************************* */
+	private static final int TEST_ringAgainTime = 20;
+	private static final int ringAgainTime = 5;
+	
 	private MiamMiam miamMiam;
 	private ClockManager clockManager;
 	private Date ringDate;
@@ -77,7 +88,17 @@ public class AlarmClock extends UnicastRemoteObject implements
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(this.ringDate);
-		cal.add(Calendar.SECOND, 20);
+		if (MiamMiam.TESTING) {
+			cal.add(Calendar.SECOND, AlarmClock.TEST_ringAgainTime);
+			System.out.println("[INFO] Alarm will ring again in "
+					+ AlarmClock.TEST_ringAgainTime + " secondes if "
+					+ "it still armed");
+		} else {
+			cal.add(Calendar.MINUTE, AlarmClock.ringAgainTime);
+			System.out.println("[INFO] Alarm will ring again in "
+					+ AlarmClock.ringAgainTime + " minutes if "
+					+ "it still armed");
+		}
 		this.ringDate = cal.getTime();
 		this.armed = false;
 		this.ringing = true;
@@ -133,9 +154,9 @@ public class AlarmClock extends UnicastRemoteObject implements
 
 	@Override
 	public void setHuman(HumanInterface human) throws RemoteException {
-		if(this.messageTransmitter!=null) {
+		if (this.messageTransmitter != null) {
 			this.messageTransmitter.interrupt();
-			this.messageTransmitter=null;
+			this.messageTransmitter = null;
 		}
 		this.messageTransmitter = new MessageTransmitter(human, this);
 		this.messageTransmitter.start();
@@ -149,7 +170,7 @@ public class AlarmClock extends UnicastRemoteObject implements
 	@Override
 	public void stop() throws RemoteException {
 		this.clockManager.interrupt();
-		if(this.messageTransmitter!=null) {
+		if (this.messageTransmitter != null) {
 			this.messageTransmitter.interrupt();
 		}
 		System.exit(0);
