@@ -1,19 +1,12 @@
 package complementary;
 
-
-
 /**
  * The {@link MiamMiam complementary class} interface
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
  * 
  */
 public interface MiamMiamInterface {
-	
-	/**
-	 * To reduce the waiting times
-	 */
-	public static final boolean TESTING=true;
 
 	/**
 	 * Say if the alarm clock is in disarming state
@@ -47,16 +40,16 @@ public interface MiamMiamInterface {
 	/**
 	 * Say if the alarm clock is in disarming mode
 	 * 
-	 * @return {@link Boolean boolean} - <code>true</code> if the token is
-	 *         in disarming state, <code>false</code> otherwise
+	 * @return {@link Boolean boolean} - <code>true</code> if the token is in
+	 *         disarming state, <code>false</code> otherwise
 	 */
 	public abstract boolean isDisarming();
 
 	/**
 	 * Say if the alarm clock is in arming mode
 	 * 
-	 * @return {@link Boolean boolean} - <code>true</code> if the token is
-	 *         in arming state, <code>false</code> otherwise
+	 * @return {@link Boolean boolean} - <code>true</code> if the token is in
+	 *         arming state, <code>false</code> otherwise
 	 */
 	public abstract boolean isArming();
 

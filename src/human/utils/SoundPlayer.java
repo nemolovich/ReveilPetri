@@ -8,8 +8,8 @@ import sun.audio.AudioStream;
 /**
  * A thread object to play a sound (the alarm clock ring)
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
+ * 
  */
 public class SoundPlayer extends Thread {
 
@@ -18,7 +18,9 @@ public class SoundPlayer extends Thread {
 
 	/**
 	 * Constructor using the sound path
-	 * @param soundPath {@link String} - The sound path
+	 * 
+	 * @param soundPath
+	 *            {@link String} - The sound path
 	 */
 	public SoundPlayer(String soundPath) {
 		super();
@@ -35,7 +37,7 @@ public class SoundPlayer extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void interrupt() {
 		AudioPlayer.player.stop(this.as);

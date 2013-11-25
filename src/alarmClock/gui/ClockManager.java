@@ -9,7 +9,7 @@ import alarmClock.AlarmClockInterface;
  * The alarm clock manager: synchronize the {@link AlarmClockView alarm clock
  * view} with the {@link AlarmClockInterface alarm clock item}
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
  * 
  */
 public class ClockManager extends Thread {
@@ -63,8 +63,6 @@ public class ClockManager extends Thread {
 
 	@Override
 	public void interrupt() {
-		System.err
-				.println("The alarm clock does not have battery anymo.......");
 		super.interrupt();
 	}
 }

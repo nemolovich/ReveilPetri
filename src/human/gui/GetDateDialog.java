@@ -25,8 +25,8 @@ import javax.swing.WindowConstants;
 /**
  * A {@link JDialog} to get a {@link Date} from two {@link JTextField}
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
+ * 
  */
 public class GetDateDialog extends JDialog implements ActionListener,
 		KeyListener {
@@ -150,13 +150,13 @@ public class GetDateDialog extends JDialog implements ActionListener,
 		pickerPanel.add(downPanel);
 
 		entryPanel.add(pickerPanel);
-		
-		Calendar cal=Calendar.getInstance();
+
+		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MINUTE, 1);
 		this.hourField.setText(String.format("%02d",
 				cal.get(Calendar.HOUR_OF_DAY)));
-		this.minuteField.setText(String.format("%02d",
-				cal.get(Calendar.MINUTE)));
+		this.minuteField
+				.setText(String.format("%02d", cal.get(Calendar.MINUTE)));
 
 		// Buttons
 		JPanel buttonsPanel = new JPanel();
@@ -183,6 +183,7 @@ public class GetDateDialog extends JDialog implements ActionListener,
 
 	/**
 	 * Returns the date value of the compute date from fields
+	 * 
 	 * @return {@link Date} - The date in fields
 	 */
 	public Date getValue() {

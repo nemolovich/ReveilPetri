@@ -6,3 +6,5 @@ human
 human.gui
 human.main
 human.utils
+messages
+tests

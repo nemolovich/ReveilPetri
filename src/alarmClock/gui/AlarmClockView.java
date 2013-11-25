@@ -28,14 +28,12 @@ import javax.swing.SwingConstants;
 
 import alarmClock.AlarmClockInterface;
 
-
-
 /**
  * 
  * The alarm clock graphic interface
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
+ * 
  */
 public class AlarmClockView extends JFrame {
 

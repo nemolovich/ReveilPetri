@@ -1,6 +1,5 @@
 package human.main;
 
-
 import human.Human;
 
 import java.net.InetAddress;
@@ -19,8 +18,8 @@ import alarmClock.AlarmClockInterface;
 /**
  * The human launcher
  * 
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * @author Florian FAGNIEZ, Brian GOHIER, Noemie RULLIER
+ * 
  */
 public class HumanLauncher {
 
@@ -57,38 +56,38 @@ public class HumanLauncher {
 			System.exit(0);
 		}
 
-//		Human human = null;
+		// Human human = null;
 		try {
-//			human = 
-					new Human(alarmClock);
+			// human =
+			new Human(alarmClock);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		System.out.println("Congrats! You were born!");
-//		System.out.println(human.toString());
-//		@SuppressWarnings("resource")
-//		Scanner sc = new Scanner(System.in);
-//		String command = "";
-//		do {
-//			System.out.println("Type your command: ");
-//			command = sc.nextLine();
-//			if (command.equalsIgnoreCase("goToSleep")) {
-//				human.goToSleep();
-//			} else if (command.equalsIgnoreCase("arme")) {
-//				human.arme();
-//			} else if (command.equalsIgnoreCase("disarme")) {
-//				human.disarme();
-//			} else if (command.equalsIgnoreCase("gotNightmares")) {
-//				human.gotNightmares();
-//			} else if (command.equalsIgnoreCase("gotRing")) {
-//				human.gotRing();
-//			} else if (!command.equalsIgnoreCase("selfkill")) {
-//				System.err.println("Unknown command \"" + command + "\"");
-//			}
-//			System.out.println(human.toString());
-//			System.out.println(alarmClock.toString());
-//		} while (!command.equalsIgnoreCase("selfkill"));
-//		System.err.println("R.I.P.");
+		System.out.println("[INFO] Congrats! You were born!");
+		// System.out.println(human.toString());
+		// @SuppressWarnings("resource")
+		// Scanner sc = new Scanner(System.in);
+		// String command = "";
+		// do {
+		// System.out.println("Type your command: ");
+		// command = sc.nextLine();
+		// if (command.equalsIgnoreCase("goToSleep")) {
+		// human.goToSleep();
+		// } else if (command.equalsIgnoreCase("arme")) {
+		// human.arme();
+		// } else if (command.equalsIgnoreCase("disarme")) {
+		// human.disarme();
+		// } else if (command.equalsIgnoreCase("gotNightmares")) {
+		// human.gotNightmares();
+		// } else if (command.equalsIgnoreCase("gotRing")) {
+		// human.gotRing();
+		// } else if (!command.equalsIgnoreCase("selfkill")) {
+		// System.err.println("Unknown command \"" + command + "\"");
+		// }
+		// System.out.println(human.toString());
+		// System.out.println(alarmClock.toString());
+		// } while (!command.equalsIgnoreCase("selfkill"));
+		// System.err.println("R.I.P.");
 	}
 }
