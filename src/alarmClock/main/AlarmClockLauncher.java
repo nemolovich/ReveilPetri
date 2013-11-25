@@ -15,7 +15,7 @@ import alarmClock.AlarmClock;
  * The alarm clock launcher
  * 
  * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * 
  */
 public class AlarmClockLauncher {
 
@@ -35,9 +35,8 @@ public class AlarmClockLauncher {
 			Naming.rebind(url, alarmClock);
 		} catch (ExportException e) {
 			if (e.getCause() instanceof BindException) {
-				System.err
-						.println("The alarm clock can not be started on this port: "
-								+ port);
+				System.err.println("[ERROR] The alarm clock can not be "
+						+ "started on this port: " + port);
 			}
 			e.printStackTrace();
 			System.exit(0);
@@ -51,33 +50,33 @@ public class AlarmClockLauncher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		System.out.println("[ Alarm clock is set as remote  ] : " + url);
-		System.out.println("Alarm clock is ready!");
-//		System.out.println(alarmClock.toString());
-//		Scanner sc = new Scanner(System.in);
-//		String command = "";
-//		try {
-//			do {
-//				System.out.println("Type your command: ");
-//				command = sc.nextLine();
-//				if (command.equalsIgnoreCase("arme")) {
-//						alarmClock.arme();
-//				} else if (command.equalsIgnoreCase("autodisarme")) {
-//					alarmClock.autoDisarme();
-//				} else if (command.equalsIgnoreCase("disarme")) {
-//					alarmClock.disarme();
-//				} else if (command.equalsIgnoreCase("ring")) {
-//					alarmClock.ring();
-//				} else if (!command.equalsIgnoreCase("noBattery")) {
-//					System.err.println("Unknown command \"" + command + "\"");
-//				}
-//				System.out.println(alarmClock.toString());
-//			} while (!command.equalsIgnoreCase("noBattery"));
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
-//		System.err
-//				.println("The alarm clock does not have battery anymo.......");
+		System.out.println("[INFO] Alarm clock is set as remote url: " + url);
+		System.out.println("[INFO] Alarm clock is ready!");
+		// System.out.println(alarmClock.toString());
+		// Scanner sc = new Scanner(System.in);
+		// String command = "";
+		// try {
+		// do {
+		// System.out.println("Type your command: ");
+		// command = sc.nextLine();
+		// if (command.equalsIgnoreCase("arme")) {
+		// alarmClock.arme();
+		// } else if (command.equalsIgnoreCase("autodisarme")) {
+		// alarmClock.autoDisarme();
+		// } else if (command.equalsIgnoreCase("disarme")) {
+		// alarmClock.disarme();
+		// } else if (command.equalsIgnoreCase("ring")) {
+		// alarmClock.ring();
+		// } else if (!command.equalsIgnoreCase("noBattery")) {
+		// System.err.println("Unknown command \"" + command + "\"");
+		// }
+		// System.out.println(alarmClock.toString());
+		// } while (!command.equalsIgnoreCase("noBattery"));
+		// } catch (RemoteException e) {
+		// e.printStackTrace();
+		// }
+		// System.err
+		// .println("The alarm clock does not have battery anymo.......");
 	}
 
 }

@@ -65,7 +65,7 @@ public class HumanLauncher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		System.out.println("Congrats! You were born!");
+		System.out.println("[INFO] Congrats! You were born!");
 //		System.out.println(human.toString());
 //		@SuppressWarnings("resource")
 //		Scanner sc = new Scanner(System.in);

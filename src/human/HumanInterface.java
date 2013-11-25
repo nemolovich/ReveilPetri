@@ -13,6 +13,15 @@ import java.util.Date;
  */
 public interface HumanInterface extends Remote {
 
+	/* ********************************* *
+	 *      HUMAN TIMES CONSTRAINTS      *
+	 * ********************************* */
+	public static final int wakeUpTime = 480;
+	public static final int TEST_mySelfWakeUpMinimum = 10;
+	public static final int TEST_armMinimum = 15;
+	public static final int mySelfWakeUpMinimum = 60;
+	public static final int armMinimum = 840;
+
 	/**
 	 * Human action to go to sleep
 	 * 
@@ -58,5 +67,10 @@ public interface HumanInterface extends Remote {
 	public abstract Date getWakeUpDate() throws RemoteException;
 
 	public abstract Date getSleepingDate() throws RemoteException;
+
+	/**
+	 * Kill The human instance
+	 */
+	public abstract void kill() throws RemoteException;
 
 }

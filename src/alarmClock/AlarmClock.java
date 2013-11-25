@@ -9,6 +9,10 @@ import java.util.Date;
 
 import javax.swing.UIManager;
 
+import tests.AlarmClockTest;
+
+import messages.MessageTransmitter;
+import messages.RingMessage;
 import alarmClock.gui.ClockManager;
 
 import complementary.MiamMiam;
@@ -28,6 +32,7 @@ public class AlarmClock extends UnicastRemoteObject implements
 	 */
 	private static final long serialVersionUID = -4805647396138407720L;
 	
+
 	/* ********************************* *
 	 *            HUMAN STATES           *
 	 * ********************************* */
@@ -35,16 +40,10 @@ public class AlarmClock extends UnicastRemoteObject implements
 	private boolean armed = false;
 	private boolean ringing = false;
 
-	/* ********************************* *
-	 *   ALARM CLOCK TIMES CONSTRAINTS   *
-	 * ********************************* */
-	private static final int TEST_ringAgainTime = 20;
-	private static final int ringAgainTime = 5;
-	
 	private MiamMiam miamMiam;
 	private ClockManager clockManager;
 	private Date ringDate;
-	private MessageTransmitter messageTransmitter;
+	private MessageTransmitter ringTransmitter;
 
 	public AlarmClock() throws RemoteException {
 		super();
@@ -55,8 +54,10 @@ public class AlarmClock extends UnicastRemoteObject implements
 			e.printStackTrace();
 		}
 		this.miamMiam = MiamMiam.getInstance();
-		this.clockManager = new ClockManager(this);
-		this.clockManager.start();
+		if(!AlarmClockTest.ALARM_CLOCK_IN_TEST) {
+			this.clockManager = new ClockManager(this);
+			this.clockManager.start();
+		}
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MINUTE, 1);
 		this.ringDate = cal.getTime();
@@ -66,7 +67,7 @@ public class AlarmClock extends UnicastRemoteObject implements
 	public void arme(Date date) throws RemoteException {
 		System.out.println("[REQUEST] arme() in process");
 		if (!this.disarmed) {
-			System.err.println("The alarm clock is not disarmed yet!");
+			System.err.println("[ERROR] The alarm clock is not disarmed yet!");
 			System.out.println("[REQUEST] arme() --> [FAIL]");
 			return;
 		}
@@ -75,43 +76,46 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.disarmed = false;
 		this.armed = true;
 		System.out.println("[REQUEST] arme() --> [OK]");
-		System.out.println("Alarm clock armed");
+		System.out.println("[INFO] Alarm clock armed");
 	}
 
 	@Override
 	public void ring() throws RemoteException {
 		System.out.println("[REQUEST] ring() in process");
 		if (!this.armed && !this.ringing) {
-			System.err.println("The alarm clock is not armed yet!");
+			System.err.println("[ERROR] The alarm clock is not armed yet!");
 			System.out.println("[REQUEST] ring() --> [FAIL]");
 			return;
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(this.ringDate);
 		if (MiamMiam.TESTING) {
-			cal.add(Calendar.SECOND, AlarmClock.TEST_ringAgainTime);
+			cal.add(Calendar.SECOND, AlarmClockInterface.TEST_ringAgainTime);
 			System.out.println("[INFO] Alarm will ring again in "
-					+ AlarmClock.TEST_ringAgainTime + " secondes if "
+					+ AlarmClockInterface.TEST_ringAgainTime + " secondes if "
 					+ "it still armed");
 		} else {
-			cal.add(Calendar.MINUTE, AlarmClock.ringAgainTime);
+			cal.add(Calendar.MINUTE, AlarmClockInterface.ringAgainTime);
 			System.out.println("[INFO] Alarm will ring again in "
-					+ AlarmClock.ringAgainTime + " minutes if "
+					+ AlarmClockInterface.ringAgainTime + " minutes if "
 					+ "it still armed");
 		}
 		this.ringDate = cal.getTime();
 		this.armed = false;
 		this.ringing = true;
-		this.messageTransmitter.setInTransmition();
+		if(this.ringTransmitter != null) {
+			this.ringTransmitter.setInTransmition();
+		}
 		System.out.println("[REQUEST] ring() --> [OK]");
-		System.out.println("Alarm clock is now ringing");
+		System.out.println("[INFO] Alarm clock is now ringing");
 	}
 
 	@Override
 	public void autoDisarme() throws RemoteException {
 		System.out.println("[REQUEST] autoDisarme() in process");
 		if (!this.ringing) {
-			System.err.println("The alarm clock is not ringing at the moment!");
+			System.err
+					.println("[ERROR] The alarm clock is not ringing at the moment!");
 			System.out.println("[REQUEST] autoDisarme() --> [FAIL]");
 			return;
 		}
@@ -119,14 +123,14 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.ringing = false;
 		this.disarmed = true;
 		System.out.println("[REQUEST] autoDisarme() --> [OK]");
-		System.out.println("Alarm clock auto-disarmed");
+		System.out.println("[INFO] Alarm clock auto-disarmed");
 	}
 
 	@Override
 	public void disarme() throws RemoteException {
 		System.out.println("[REQUEST] disarme() in process");
 		if (!this.armed) {
-			System.err.println("The alarm clock is not armed yet!");
+			System.err.println("[ERROR] The alarm clock is not armed yet!");
 			System.out.println("[REQUEST] disarme() --> [FAIL]");
 			return;
 		}
@@ -134,7 +138,7 @@ public class AlarmClock extends UnicastRemoteObject implements
 		this.armed = false;
 		this.disarmed = true;
 		System.out.println("[REQUEST] disarme() --> [OK]");
-		System.out.println("Alarm clock disarmed");
+		System.out.println("[INFO] Alarm clock disarmed");
 	}
 
 	@Override
@@ -154,12 +158,12 @@ public class AlarmClock extends UnicastRemoteObject implements
 
 	@Override
 	public void setHuman(HumanInterface human) throws RemoteException {
-		if (this.messageTransmitter != null) {
-			this.messageTransmitter.interrupt();
-			this.messageTransmitter = null;
+		if (this.ringTransmitter != null) {
+			this.ringTransmitter.interrupt();
+			this.ringTransmitter = null;
 		}
-		this.messageTransmitter = new MessageTransmitter(human, this);
-		this.messageTransmitter.start();
+		this.ringTransmitter = new RingMessage(human, this, "ring");
+		this.ringTransmitter.start();
 	}
 
 	@Override
@@ -170,9 +174,11 @@ public class AlarmClock extends UnicastRemoteObject implements
 	@Override
 	public void stop() throws RemoteException {
 		this.clockManager.interrupt();
-		if (this.messageTransmitter != null) {
-			this.messageTransmitter.interrupt();
+		if (this.ringTransmitter != null) {
+			this.ringTransmitter.interrupt();
 		}
+		System.err.println("The alarm clock does not "
+				+ "have battery anymo.......");
 		System.exit(0);
 	}
 
@@ -186,13 +192,8 @@ public class AlarmClock extends UnicastRemoteObject implements
 		return this.miamMiam.inDisarming();
 	}
 
-	/**
-	 * Say if the alarm clock is disarmed
-	 * 
-	 * @return {@link Boolean boolean} - <code>true</code> if the alarm clock is
-	 *         disarmed
-	 */
-	public boolean isDisarmed() {
+	@Override
+	public boolean isDisarmed() throws RemoteException {
 		return this.disarmed;
 	}
 

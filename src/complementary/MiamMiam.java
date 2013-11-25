@@ -15,6 +15,12 @@ import java.rmi.RemoteException;
  */
 public class MiamMiam implements MiamMiamInterface {
 
+	/**
+	 * Set this variable to true to reduce the waiting times
+	 * this is useful to test the program
+	 */
+	public static boolean TESTING = true;
+
 	private static MiamMiam instance = null;
 	private boolean isMiamMiaming = true;
 	private boolean isDisarming = false;
@@ -42,7 +48,7 @@ public class MiamMiam implements MiamMiamInterface {
 	@Override
 	public boolean inDisarming() {
 		if (!this.isMiamMiaming) {
-			System.err.println("You can not disarming right now!");
+			System.err.println("[ERROR] You can not disarm right now!");
 			return false;
 		}
 		this.isMiamMiaming = false;
@@ -53,8 +59,10 @@ public class MiamMiam implements MiamMiamInterface {
 	@Override
 	public boolean inArming() {
 		if (!this.isMiamMiaming) {
-			System.err.println("You can not disarming right now!");
-			return false;
+			if(!this.isArming()) {
+				System.err.println("[ERROR] You can not arm right now!");
+			}
+			return this.isArming;
 		}
 		this.isMiamMiaming = false;
 		this.isArming = true;
@@ -64,7 +72,7 @@ public class MiamMiam implements MiamMiamInterface {
 	@Override
 	public void addToken() {
 		if (this.isMiamMiaming) {
-			System.err.println("There is already a token!");
+			System.err.println("[ERROR] There is already a token!");
 			return;
 		}
 		this.isMiamMiaming = true;

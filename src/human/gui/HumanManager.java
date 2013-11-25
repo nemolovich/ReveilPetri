@@ -3,7 +3,6 @@
  */
 package human.gui;
 
-import human.Human;
 import human.HumanInterface;
 
 import java.rmi.RemoteException;
@@ -12,11 +11,11 @@ import java.util.Date;
 
 import alarmClock.AlarmClockInterface;
 
-import complementary.MiamMiamInterface;
+import complementary.MiamMiam;
 
 /**
- * @author Florian FAGNIEZ, Brian GOHIER, Noémie RULLIER
- *
+ * @author Florian FAGNIEZ, Brian GOHIER, NoÃ©mie RULLIER
+ * 
  */
 public class HumanManager extends Thread {
 
@@ -40,31 +39,35 @@ public class HumanManager extends Thread {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
-					if(this.human.isAsleep()) {
-						Date sleepingDate=this.human.getSleepingDate();
+					if (this.human.isAsleep()) {
+						Date sleepingDate = this.human.getSleepingDate();
 						Calendar cal = Calendar.getInstance();
 						cal.setTime(sleepingDate);
-						if (MiamMiamInterface.TESTING) {
-							cal.add(Calendar.SECOND, Human.TEST_mySelfWakeUpMinimum);
+						if (MiamMiam.TESTING) {
+							cal.add(Calendar.SECOND,
+									HumanInterface.TEST_mySelfWakeUpMinimum);
 						} else {
-							cal.add(Calendar.MINUTE, Human.mySelfWakeUpMinimum);
+							cal.add(Calendar.MINUTE,
+									HumanInterface.mySelfWakeUpMinimum);
 						}
-						if (!cal.getTime().before(Calendar.getInstance().getTime())) {
+						if (!cal.getTime().before(
+								Calendar.getInstance().getTime())) {
 							this.HumanView.setSelfWakeUp(false);
 						} else {
 							this.HumanView.setSelfWakeUp(true);
 						}
-					}
-					else if(this.human.isAwake()) {
-						Date wakeUpDate=this.human.getWakeUpDate();
+					} else if (this.human.isAwake()) {
+						Date wakeUpDate = this.human.getWakeUpDate();
 						Calendar cal = Calendar.getInstance();
 						cal.setTime(wakeUpDate);
-						if (MiamMiamInterface.TESTING) {
-							cal.add(Calendar.SECOND, Human.TEST_armMinimum);
+						if (MiamMiam.TESTING) {
+							cal.add(Calendar.SECOND,
+									HumanInterface.TEST_armMinimum);
 						} else {
-							cal.add(Calendar.MINUTE, Human.armMinimum);
+							cal.add(Calendar.MINUTE, HumanInterface.armMinimum);
 						}
-						if (!cal.getTime().before(Calendar.getInstance().getTime())) {
+						if (!cal.getTime().before(
+								Calendar.getInstance().getTime())) {
 							this.HumanView.setArm(false);
 						} else {
 							this.HumanView.setArm(true);
@@ -79,19 +82,17 @@ public class HumanManager extends Thread {
 			// Killed
 		}
 	}
-	
+
 	public void update(Date date) {
 		this.HumanView.update(date);
 	}
-	
+
 	public HumanView getView() {
 		return this.HumanView;
 	}
 
 	@Override
 	public void interrupt() {
-		System.err
-				.println("The alarm clock does not have battery anymo.......");
 		super.interrupt();
 	}
 }

@@ -1,6 +1,5 @@
 package human.gui;
 
-
 import human.Human;
 import human.HumanInterface;
 
@@ -12,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import complementary.MiamMiam;
 
 /**
  * The human graphic user interface
@@ -120,22 +122,23 @@ public class HumanView extends JFrame implements ActionListener {
 		}
 		if (date != null) {
 			this.label.setText("Alarm Clock: " + this.format.format(date));
-		}
-		else {
+		} else {
 			this.label.setText("Alarm Clock: null");
 		}
 		this.repaint();
 	}
-	
+
 	/**
-	 * Enable/Disable the "{@link HumanView#gotNightmares Got nightmares}" button
+	 * Enable/Disable the "{@link HumanView#gotNightmares Got nightmares}"
+	 * button
 	 */
 	public void setSelfWakeUp(boolean enabled) {
 		this.gotNightmares.setEnabled(enabled);
 	}
-	
+
 	/**
-	 * Enable/Disable the "{@link HumanView#gotNightmares Arm alarm clock}" button
+	 * Enable/Disable the "{@link HumanView#gotNightmares Arm alarm clock}"
+	 * button
 	 */
 	public void setArm(boolean enabled) {
 		this.arme.setEnabled(enabled);
@@ -145,9 +148,12 @@ public class HumanView extends JFrame implements ActionListener {
 	 * Close the human graphic interface
 	 */
 	protected void close() {
+		 try {
+			this.human.kill();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		this.dispose();
-		System.err.println("R.I.P.");
-		System.exit(0);
 	}
 
 	/**
@@ -166,14 +172,20 @@ public class HumanView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		try {
 			if (event.getSource().equals(this.arme)) {
-				GetDateDialog dialog = new GetDateDialog(this);
-				Date date = dialog.getValue();
-				if(date!=null) {
+				Date date = null;
+				if (MiamMiam.TESTING) {
+					GetDateDialog dialog = new GetDateDialog(this);
+					date = dialog.getValue();
+				} else {
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.MINUTE, HumanInterface.wakeUpTime);
+				}
+				if (date != null) {
 					this.human.arme(date);
 				}
 			} else if (event.getSource().equals(this.disarme)) {
 				this.human.disarme();
-				this.update((Date)null);
+				this.update((Date) null);
 			} else if (event.getSource().equals(this.goToSleep)) {
 				this.human.goToSleep();
 			} else if (event.getSource().equals(this.gotNightmares)) {

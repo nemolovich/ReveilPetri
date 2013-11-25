@@ -13,6 +13,13 @@ import java.util.Date;
  *
  */
 public interface AlarmClockInterface extends Remote {
+	
+	
+	/* ********************************* *
+	 *   ALARM CLOCK TIMES CONSTRAINTS   *
+	 * ********************************* */
+	public static final int TEST_ringAgainTime = 20;
+	public static final int ringAgainTime = 5;
 
 	/**
 	 * Arm the alarm clock at the given date
@@ -53,6 +60,15 @@ public interface AlarmClockInterface extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract boolean isArmed() throws RemoteException;
+
+	/**
+	 * Say if the alarm clock is disarmed
+	 * 
+	 * @return {@link Boolean boolean} - <code>true</code> if the alarm clock is
+	 *         disarmed, <code>false</code> otherwise
+	 * @throws RemoteException
+	 */
+	public abstract boolean isDisarmed() throws RemoteException;
 
 	/**
 	 * Say if the alarm clock is ringing
